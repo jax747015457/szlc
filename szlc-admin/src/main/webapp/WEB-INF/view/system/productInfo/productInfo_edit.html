@@ -1,0 +1,49 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="id" value="${item.id}">
+            <input type="hidden" id="contentVal" value='${item.introduce}'>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <#inputTip id="productName" name="理财产品" value="${item.productName}" txtTip="最多可输入15个字"/>
+                    <#inputTip id="productNo" name="理财编号" value="${item.productNo}"/>
+                    <#inputTip id="annualRate" name="转化率" value="${item.annualRate}"/>
+                    <#inputTip id="minMoney" name="起投金额" value="${item.minMoney}"/>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">产品介绍</label>
+                        <div class="col-sm-10">
+                            <div id="editor" class="editorHeight">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">交易规则</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" id="tradingRules" name="tradingRules">${item.tradingRules}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">风险提示</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" id="riskTip" name="riskTip">${item.riskTip}</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10 col-sm-offset-5">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="ProductInfoInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="ProductInfoInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript" src="${ctxPath}/static/js/plugins/wangEditor/wangEditor.js"></script>
+<script src="${ctxPath}/static/modular/system/productInfo/productInfo_info.js"></script>
+@}

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.system.dao.MchContactInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.stylefeng.guns.modular.system.model.MchContactInfo">
+        <id column="id" property="id" />
+        <result column="iId" property="iId" />
+        <result column="sTureName" property="sTureName" />
+        <result column="sPhone" property="sPhone" />
+        <result column="sEmail" property="sEmail" />
+        <result column="sCashBank" property="sCashBank" />
+        <result column="sCashAccount" property="sCashAccount" />
+        <result column="sCashAddr" property="sCashAddr" />
+        <result column="sIdNumber" property="sIdNumber" />
+        <result column="sSiteName" property="sSiteName" />
+        <result column="sSiteHttp" property="sSiteHttp" />
+        <result column="dCreatTime" property="dCreatTime" />
+        <result column="dUpdateTime" property="dUpdateTime" />
+        <result column="iUpdateUserId" property="iUpdateUserId" />
+        <result column="sUpdateUserName" property="sUpdateUserName" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <!-- <sql id="Base_Column_List">
+        id, account, phone, nickName, avatar, userPwd, handPwd, realName, idCard, email, creditScore, orderBy, status, roleType, roleName, roleParentId, profitRate, createTime
+    </sql> -->
+
+
+    <!--过去7天用户注册数-->
+    <select id="list" resultType="java.util.Map">
+    	SELECT * FROM YYBM_MchContactInfo WHERE sTureName LIKE '%o.sTureName%' or iId LIKE '%o.sTureName%' AND sPhone LIKE 'o.sPhone' ORDER BY iId
+        <!-- SELECT v.addTime AS time, IFNULL(oi.num,0) AS num FROM past_7_day_view v
+        LEFT JOIN (SELECT DATE_FORMAT(o.createTime,'%Y-%m-%d') AS createTime, COUNT(*) AS num FROM app_user_info o GROUP BY DATE_FORMAT(o.createTime,'%Y-%m-%d')) oi ON v.addTime = oi.createTime -->
+    </select>
+
+</mapper>

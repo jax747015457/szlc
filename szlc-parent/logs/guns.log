@@ -1,0 +1,12 @@
+2018-08-08 15:54:33,922 [ERROR] [restartedMain] com.stylefeng.guns.GunsApplication [GunsApplication.java : 21] GunsApplication is success!
+2018-08-08 15:55:02,693 [ERROR] [http-nio-9090-exec-1] c.s.guns.modular.system.service.impl.OrderRebateServiceImpl [OrderRebateServiceImpl.java : 112] __RepIP:__192.168.3.135________________ServerIp():__59.42.129.189
+2018-08-08 15:56:06,827 [ERROR] [http-nio-9090-exec-8] com.stylefeng.guns.core.util.FileUtil [FileUtil.java : 25] 文件未找到！/root/apache-tomcat-pic/webapps/pictureServer/static/upload/\a72b7776-3bda-4e56-a965-984776154924.jpg
+2018-08-08 15:56:06,827 [ERROR] [http-nio-9090-exec-5] com.stylefeng.guns.core.util.FileUtil [FileUtil.java : 25] 文件未找到！/root/apache-tomcat-pic/webapps/pictureServer/static/upload/\1781b536-7839-412c-b854-e47d88d2f9df.jpg
+2018-08-08 15:56:56,833 [ERROR] [http-nio-9090-exec-7] com.stylefeng.guns.core.util.FileUtil [FileUtil.java : 25] 文件未找到！/root/apache-tomcat-pic/webapps/pictureServer/static/upload/\1781b536-7839-412c-b854-e47d88d2f9df.jpg
+2018-08-08 15:56:56,833 [ERROR] [http-nio-9090-exec-6] com.stylefeng.guns.core.util.FileUtil [FileUtil.java : 25] 文件未找到！/root/apache-tomcat-pic/webapps/pictureServer/static/upload/\undefined.jpg
+2018-08-08 15:57:18,371 [ERROR] [http-nio-9090-exec-5] com.stylefeng.guns.core.util.FileUtil [FileUtil.java : 25] 文件未找到！/root/apache-tomcat-pic/webapps/pictureServer/static/upload/\1781b536-7839-412c-b854-e47d88d2f9df.jpg
+2018-08-08 15:57:18,372 [ERROR] [http-nio-9090-exec-1] com.stylefeng.guns.core.util.FileUtil [FileUtil.java : 25] 文件未找到！/root/apache-tomcat-pic/webapps/pictureServer/static/upload/\undefined.jpg
+2018-08-08 16:00:00,312 [ERROR] [pool-1-thread-1] com.stylefeng.guns.modular.system.job.OutTimeOrderRebate [OutTimeOrderRebate.java : 39] 每隔30分钟执行一次___16:00:00
+2018-08-08 16:17:12,589 [ERROR] [restartedMain] com.stylefeng.guns.GunsApplication [GunsApplication.java : 21] GunsApplication is success!
+2018-08-08 16:17:16,895 [ERROR] [http-nio-9090-exec-4] com.stylefeng.guns.core.util.FileUtil [FileUtil.java : 25] 文件未找到！/root/apache-tomcat-pic/webapps/pictureServer/static/upload/\undefined.jpg
+2018-08-08 16:17:16,895 [ERROR] [http-nio-9090-exec-1] com.stylefeng.guns.core.util.FileUtil [FileUtil.java : 25] 文件未找到！/root/apache-tomcat-pic/webapps/pictureServer/static/upload/\1781b536-7839-412c-b854-e47d88d2f9df.jpg

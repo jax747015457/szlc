@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit"/><!-- 让360浏览器默认选择webkit内核 -->
+
+    <!-- 全局css -->
+    <link rel="shortcut icon" href="${ctxPath}/static/favicon.ico">
+    <link href="${ctxPath}/static/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="${ctxPath}/static/css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="${ctxPath}/static/css/plugins/validate/bootstrapValidator.min.css" rel="stylesheet">
+
+    <!-- 全局js -->
+    <script src="${ctxPath}/static/js/jquery.min.js?v=2.1.4"></script>
+    <script src="${ctxPath}/static/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="${ctxPath}/static/js/plugins/validate/bootstrapValidator.min.js"></script>
+    <script src="${ctxPath}/static/js/plugins/validate/zh_CN.js"></script>
+    <script src="${ctxPath}/static/js/common/Feng.js"></script>
+
+    <script type="text/javascript">
+        function getQRcode() {
+            var account = $("#account").val();
+            if (account.trim() == "") {
+                alert("账号不能为空");
+                return;
+            }
+            var key = $("#key").val();
+            if (key.trim() == "") {
+                alert("Key不能为空");
+                return;
+            }
+            var money = $("#money").val();
+            $.ajax({
+                url: "${ctxPath}/orderRebate/getQRcode",
+                type: "post",
+                data: {"account": account, "key": key, "money": money},
+                success: function (data) {
+                    if(data.code == 0) {
+                        $("#orderRebateId").val(data.orderRebateId);
+                        $("#rebateMoney").html(data.money);
+                        // 默认无图
+                        var noPicImg = '<img src="${ctxPath}/static/img/NoPIC.png" width="100%" style="max-width:420px;">';
+                        // 支付宝二维码
+                        var qrCodeAliImg = '<img src="${ctxPath}/kaptcha/' + data.qrCodeAli + '" width="100%" style="max-width:420px;">';
+                        // 微信二维码
+                        var qrCodeWxImg = '<img src="${ctxPath}/kaptcha/' + data.qrCodeWx + '" width="100%" style="max-width:420px;">';
+                        // 如果支付宝或微信未上传，设置为无图
+                        if(data.qrCodeAli == "")
+                            data.qrCodeAli = noPicImg;
+                        if(data.qrCodeWx == "")
+                            data.qrCodeWx = noPicImg;
+                        $("#qrCodeAliImg").html(qrCodeAliImg);
+                        $("#qrCodeWxImg").html(qrCodeWxImg);
+                    } else {
+                        console.log(data);
+                        alert(data.msg);
+                    }
+                },
+                error: function (e) {
+                    alert("网络错误！！");
+                }
+            });
+        }
+        function unlockSpId() {
+            var orderRebateId = $("#orderRebateId").val();
+            if (orderRebateId.trim() == "") {
+                alert("扫码ID不能为空");
+                return;
+            }
+            $.ajax({
+                url: "${ctxPath}/orderRebate/unlockSpId",
+                type: "post",
+                data: {"orderRebateId": orderRebateId},
+                success: function (data) {
+                    if(data.code == 200) {
+                        alert("操作确认付款，成功");
+                        // 默认操作成功图
+                        var okPicImg = '<img src="${ctxPath}/static/img/OK.png" width="100%" style="max-width:420px;">';
+                        $("#qrCodeAliImg").html(okPicImg);
+                        $("#qrCodeWxImg").html(okPicImg);
+                    }
+                },
+                error: function (e) {
+                    alert("错误！！");
+                }
+            });
+        }
+    </script>
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="col-sm-3 b-r">
+                <h3 class="m-t-none m-b">扫码收款-平台</h3>
+                <p>欢迎登录本站(⊙o⊙)</p>
+                <form id="codeForm">
+                    <div class="form-group">
+                        <label>账号</label>
+                        <input type="text" id="account" name="account" placeholder="请输入您的账号" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Key</label>
+                        <input type="text" id="key" name="key" placeholder="请输入您的Key" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>金额</label>
+                        <input type="text" id="money" name="money" placeholder="请输入扫码金额" class="form-control">
+                    </div>
+                    <div>
+                        <button class="btn btn-block btn-outline btn-primary" type="button" onclick="getQRcode();"><strong>获&nbsp;取&nbsp;付&nbsp;款&nbsp;码</strong></button>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                </form>
+            </div>
+            <div class="col-sm-9">
+                <div class="ibox">
+                    <div class="feed-activity-list">
+                        <div class="ibox-title">
+                            <h5>扫码付款</h5>
+                        </div>
+                        <div class="ibox-content feed-element">
+                            <div class="alert alert-warning">
+                                请根据操作提示：<br>
+                                1、打开支付宝/微信APP，扫描您需要付款的二维码。<br>
+                                2、支付宝/微信APP输入付款金额，并确认付款。<br>
+                                3、付款成功后，请展示付款成功界面。<br>
+                                4、平台“确认已付款”操作成功，扫码付款成功。<br>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <h3>请输入付款金额：<strong id="rebateMoney">0.00</strong>元</h3>
+                                <input type="hidden" id="orderRebateId" />
+                            </div>
+                            <div class="col-sm-9">
+                                <button type="button" class="btn btn-block btn-outline btn-primary" onclick="unlockSpId();">确&nbsp;认&nbsp;已&nbsp;付&nbsp;款</button>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="col-sm-6">
+                                <small>支付宝二维码：</small>
+                                <div id="qrCodeAliImg"><img src="${ctxPath}/static/img/NoPIC.png" width="100%" style="max-width:420px;"></div>
+                            </div>
+                            <div class="col-sm-6">
+                                <small>微信二维码：</small>
+                                <div id="qrCodeWxImg"><img id="qrCodeWx" src="${ctxPath}/static/img/NoPIC.png" width="100%" style="max-width:420px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

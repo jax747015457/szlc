@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.system.dao.OrderRebateMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.stylefeng.guns.modular.system.model.OrderRebate">
+        <id column="id" property="id" />
+        <result column="rebateNo" property="rebateNo" />
+        <result column="money" property="money" />
+        <result column="orderId" property="orderId" />
+        <result column="serviceProviderId" property="serviceProviderId" />
+        <result column="rebateTime" property="rebateTime" />
+        <result column="qrCodeAli" property="qrCodeAli" />
+        <result column="qrCodeWx" property="qrCodeWx" />
+        <result column="confirmTime" property="confirmTime" />
+        <result column="monitorId" property="monitorId" />
+        <result column="status" property="status" />
+        <result column="createTime" property="createTime" />
+        <result column="remark" property="remark" />
+        <result column="lockSpId" property="lockSpId" />
+        <result column="settlementId" property="settlementId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, rebateNo, money, orderId, serviceProviderId, rebateTime, qrCodeAli, qrCodeWx, confirmTime, monitorId, status, createTime, remark, lockSpId, settlementId
+    </sql>
+
+
+    <!--查询订单回款信息-->
+    <select id="getMapList" resultType="java.util.Map">
+        SELECT aor.*, o.id AS orderId, o.orderNo, pi.productName, pi.productNo, ui.nickName, ui.realName, ui.phone FROM app_order_rebate aor LEFT JOIN app_order_info o ON aor.orderId = o.id
+        LEFT JOIN app_product_info pi ON o.productId = pi.id
+        LEFT JOIN app_user_info ui ON o.userId = ui.id
+        <where>
+            <if test="orderId != null">AND aor.orderId = #{orderId,jdbcType=INTEGER}</if>
+            <if test="orderNo != null and orderNo != ''">AND o.orderNo LIKE CONCAT('%',#{orderNo,jdbcType=VARCHAR},'%')</if>
+            <if test="status != null">AND aor.`status` = #{status,jdbcType=INTEGER}</if>
+            <if test="beginTime != null and beginTime != '' and endTime != null">AND aor.createTime BETWEEN #{beginTime,jdbcType=VARCHAR} AND #{endTime,jdbcType=VARCHAR}</if>
+        </where>
+        ORDER BY o.id DESC, aor.id ASC
+    </select>
+
+    <!--获取超时未确认的订单-->
+    <select id="getOrderOutTime" resultType="java.util.Map">
+        SELECT oi.userId AS userId, orderId FROM app_order_rebate o LEFT JOIN app_order_info oi ON o.orderId = oi.id WHERE rebateTime lt; #{outTime,jdbcType=TIMESTAMP} AND o.status = #{inTheRebate,jdbcType=INTEGER} GROUP BY o.orderId
+    </select>
+
+    <!--处理超时未确认的回款订单（状态：回款中->超时未确认）-->
+    <update id="updateStatusToOutTime">
+        UPDATE app_order_rebate SET status = #{exceptionOrder,jdbcType=INTEGER} WHERE rebateTime &lt; #{outTime,jdbcType=TIMESTAMP} AND status = #{inTheRebate,jdbcType=INTEGER}
+    </update>
+
+</mapper>

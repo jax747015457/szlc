@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.system.dao.UserInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.stylefeng.guns.modular.system.model.UserInfo">
+        <id column="id" property="id" />
+        <result column="account" property="account" />
+        <result column="phone" property="phone" />
+        <result column="nickName" property="nickName" />
+        <result column="avatar" property="avatar" />
+        <result column="userPwd" property="userPwd" />
+        <result column="handPwd" property="handPwd" />
+        <result column="realName" property="realName" />
+        <result column="idCard" property="idCard" />
+        <result column="email" property="email" />
+        <result column="creditScore" property="creditScore" />
+        <result column="orderBy" property="orderBy" />
+        <result column="status" property="status" />
+        <result column="roleType" property="roleType" />
+        <result column="roleName" property="roleName" />
+        <result column="roleParentId" property="roleParentId" />
+        <result column="profitRate" property="profitRate" />
+        <result column="createTime" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, account, phone, nickName, avatar, userPwd, handPwd, realName, idCard, email, creditScore, orderBy, status, roleType, roleName, roleParentId, profitRate, createTime
+    </sql>
+
+
+    <!--过去7天用户注册数-->
+    <select id="past_7_day" resultType="java.util.Map">
+        SELECT v.addTime AS time, IFNULL(oi.num,0) AS num FROM past_7_day_view v
+        LEFT JOIN (SELECT DATE_FORMAT(o.createTime,'%Y-%m-%d') AS createTime, COUNT(*) AS num FROM app_user_info o GROUP BY DATE_FORMAT(o.createTime,'%Y-%m-%d')) oi ON v.addTime = oi.createTime
+    </select>
+
+</mapper>

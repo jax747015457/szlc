@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.rest.modular.system.dao.OrderInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.stylefeng.guns.rest.modular.system.model.OrderInfo">
+        <id column="id" property="id" />
+        <result column="orderNo" property="orderNo" />
+        <result column="productId" property="productId" />
+        <result column="userId" property="userId" />
+        <result column="money" property="money" />
+        <result column="annualRate" property="annualRate" />
+        <result column="incomeAmount" property="incomeAmount" />
+        <result column="createTime" property="createTime" />
+        <result column="incomeTime" property="incomeTime" />
+        <result column="status" property="status" />
+        <result column="payTradeNo" property="payTradeNo" />
+        <result column="payTime" property="payTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, orderNo, productId, userId, money, annualRate, incomeAmount, createTime, incomeTime, status, payTradeNo, payTime
+    </sql>
+
+
+    <!--查询用户的订单-->
+    <select id="selectOpListByUserAndStatus" resultType="com.stylefeng.guns.rest.modular.system.model.vo.OrderVo">
+        SELECT o.id AS id, orderNo, productId, productName, productNo, money, incomeAmount, o.`status`, o.createTime
+        FROM app_order_info o INNER JOIN app_product_info p ON o.productId = p.id
+        <where>
+            <if test="status != null"> o.`status` in <foreach collection="status" index="index" item="item" open="(" separator="," close=")">#{item}</foreach> </if>
+            <if test="userId != null"> AND userId = #{userId,jdbcType=INTEGER} </if>
+            <if test="productId != null"> AND productId = #{productId,jdbcType=INTEGER} </if>
+        </where>
+        ORDER BY o.id DESC
+        <if test="current != null and size != null"> LIMIT #{current,jdbcType=INTEGER}, #{size,jdbcType=INTEGER} </if>
+    </select>
+
+    <!--查询用户的订单(含用户信息)-->
+    <select id="selectOpuListByUserAndStatus" resultType="com.stylefeng.guns.rest.modular.system.model.vo.OrderVo">
+        SELECT o.id AS id, orderNo, productId, productName, productNo, userId, nickName, phone, money, incomeAmount, o.`status`, o.createTime
+        FROM app_order_info o INNER JOIN app_product_info p ON o.productId = p.id INNER JOIN app_user_info u ON o.userId = u.id
+        <where>
+            <if test="status != null"> o.`status` in <foreach collection="status" index="index" item="item" open="(" separator="," close=")">#{item}</foreach> </if>
+            <if test="userId != null"> AND userId = #{userId,jdbcType=INTEGER} </if>
+            <if test="productId != null"> AND productId = #{productId,jdbcType=INTEGER} </if>
+        </where>
+        ORDER BY o.id DESC
+        <if test="current != null and size != null"> LIMIT #{current,jdbcType=INTEGER}, #{size,jdbcType=INTEGER} </if>
+    </select>
+
+</mapper>

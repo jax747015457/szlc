@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>收银台</title>
+</head>
+<body>
+正在跳转收银台..
+<form id="xqpaysubmit" name="xqpaysubmit" action="https://www.aklpay.com/website/pay.htm" method="post" style="display: none;">
+    <input type="text" name="version" value="${version}"/><br/>
+    <input type="text" name="serialID" value="${serialID}"/><br/>
+    <input type="text" name="submitTime" value="${submitTime}"/><br/>
+    <input type="text" name="customerIP" value="${customerIP}"/><br/>
+    <input type="text" name="orderDetails" value="${orderDetails}"/><br/>
+    <input type="text" name="totalAmount" value="${totalAmount}"/><br/>
+    <input type="text" name="type" value="${type}"/><br/>
+    <input type="text" name="payType" value="${payType}"/><br/>
+    <input type="text" name="orgCode" value="${orgCode}"/><br/>
+    <input type="text" name="currencyCode" value="${currencyCode}"/><br/>
+    <input type="text" name="directFlag" value="${directFlag}"/><br/>
+    <input type="text" name="borrowingMarked" value="${borrowingMarked}"/><br/>
+    <input type="text" name="couponFlag" value="${couponFlag}"/><br/>
+    <input type="text" name="returnUrl" value="${returnUrl}"/><br/>
+    <input type="text" name="noticeUrl" value="${noticeUrl}"/><br/>
+    <input type="text" name="partnerID" value="${partnerID}"/><br/>
+    <input type="text" name="remark" value="${remark}"/><br/>
+    <input type="text" name="charset" value="${charset}"/><br/>
+    <input type="text" name="signType" value="${signType}"/><br/>
+    <input type="text" name="signMsg" value="${signMsg}"/><br/>
+    <input type="submit" value="确认" style="display:inline;">
+</form>
+<script>document.forms['xqpaysubmit'].submit();</script>
+
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit"/><!-- 让360浏览器默认选择webkit内核 -->
+
+    <!-- 全局css -->
+    <link rel="shortcut icon" href="${ctxPath}/static/favicon.ico">
+    <link href="${ctxPath}/static/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="${ctxPath}/static/css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="${ctxPath}/static/css/plugins/validate/bootstrapValidator.min.css" rel="stylesheet">
+
+    <!-- 全局js -->
+    <script src="${ctxPath}/static/js/jquery.min.js?v=2.1.4"></script>
+    <script src="${ctxPath}/static/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="${ctxPath}/static/js/plugins/validate/bootstrapValidator.min.js"></script>
+    <script src="${ctxPath}/static/js/plugins/validate/zh_CN.js"></script>
+    <script src="${ctxPath}/static/js/common/Feng.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            // var data = {"code":0,"qrCodeWx" : "1781b536-7839-412c-b854-e47d88d2f9df.jpg", "qrCodeAli": ""};
+            var data = ${data};
+            // 限码类型：type=1（支付宝）type=2（微信支付）
+            var type = ${type};
+            if(type == 2) {
+                $("#qrCodeAliDiv").hide();
+            } else {
+                $("#qrCodeWxDiv").hide();
+            }
+            if(data.code == 0) {
+                $("#orderRebateId").val(data.orderRebateId);
+                $("#rebateMoney").html(data.money);
+                // 默认无图
+                var noPicImg = '<img src="${ctxPath}/static/img/NoPIC.png" width="100%" style="max-width:420px;">';
+                // 支付宝二维码
+                var qrCodeAliImg = '<img src="${ctxPath}/kaptcha/' + data.qrCodeAli + '" width="100%" style="max-width:420px;">';
+                // 微信二维码
+                var qrCodeWxImg = '<img src="${ctxPath}/kaptcha/' + data.qrCodeWx + '" width="100%" style="max-width:420px;">';
+                // 如果支付宝或微信未上传，设置为无图
+                if(data.qrCodeAli == "" || data.qrCodeAli == undefined) {
+                    $("#qrCodeAliDiv").hide();
+                    data.qrCodeAli = noPicImg;
+                } else {
+                    $("#qrCodeAliDiv").show();
+                }
+
+                if(data.qrCodeWx == "" || data.qrCodeWx == undefined) {
+                    $("#qrCodeWxDiv").hide();
+                    data.qrCodeWx = noPicImg;
+                } else {
+                    $("#qrCodeWxDiv").show();
+                }
+                $("#qrCodeAliImg").html(qrCodeAliImg);
+                $("#qrCodeWxImg").html(qrCodeWxImg);
+            }
+        });
+    </script>
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="feed-activity-list">
+                    <div class="ibox-title">
+                        <h5>扫码付款</h5>
+                    </div>
+                    <div class="ibox-content feed-element">
+                        <div class="alert alert-warning">
+                            请根据操作提示：<br>
+                            1、打开支付宝/微信APP，扫描您需要付款的二维码。<br>
+                            2、支付宝/微信APP输入付款金额，并确认付款。<br>
+                            3、付款成功后，请展示付款成功界面。<br>
+                            4、平台“确认已付款”操作成功，扫码付款成功。<br>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <h3>请输入付款金额：<strong id="rebateMoney">0.00</strong>元</h3>
+                            <input type="hidden" id="orderRebateId" />
+                        </div>
+                        <div class="hr-line-dashed"></div>
+
+                        <div class="col-sm-6" id="qrCodeAliDiv">
+                            <small>支付宝二维码：</small>
+                            <div id="qrCodeAliImg"><img src="${ctxPath}/static/img/NoPIC.png" width="100%" style="max-width:420px;"></div>
+                        </div>
+                        <div class="col-sm-6" id="qrCodeWxDiv">
+                            <small>微信二维码：</small>
+                            <div id="qrCodeWxImg"><img id="qrCodeWx" src="${ctxPath}/static/img/NoPIC.png" width="100%" style="max-width:420px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

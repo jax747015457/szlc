@@ -1,0 +1,44 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>服务商管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <#NameCon id="condition" name="服务器名称/IP" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#TimeCon id="beginTime" name="开始日期" isTime="false" pattern="YYYY-MM-DD"/>
+                            </div>
+                            <div class="col-sm-3">
+                                <#TimeCon id="endTime" name="结束日期" isTime="false" pattern="YYYY-MM-DD"/>
+                            </div>
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="ServiceProvider.search()"/>
+                            </div>
+                        </div>
+                        <div class="hidden-xs" id="ServiceProviderTableToolbar" role="group">
+                            @if(shiro.hasPermission("/serviceProvider/add")){
+                                <#button name="添加" icon="fa-plus" clickFun="ServiceProvider.openAddServiceProvider()"/>
+                            @}
+                            @if(shiro.hasPermission("/serviceProvider/update")){
+                                <#button name="修改" icon="fa-edit" clickFun="ServiceProvider.openServiceProviderDetail()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/serviceProvider/delete")){
+                                <#button name="删除" icon="fa-remove" clickFun="ServiceProvider.delete()" space="true"/>
+                            @}
+                        </div>
+                        <#table id="ServiceProviderTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/serviceProvider/serviceProvider.js"></script>
+@}

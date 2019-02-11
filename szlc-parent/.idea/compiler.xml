@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="szlc-admin" />
+        <module name="szlc-core" />
+        <module name="szlc-generator" />
+        <module name="szlc-rest" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="szlc-admin" target="1.8" />
+      <module name="szlc-core" target="1.8" />
+      <module name="szlc-generator" target="1.8" />
+      <module name="szlc-parent" target="1.8" />
+      <module name="szlc-rest" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

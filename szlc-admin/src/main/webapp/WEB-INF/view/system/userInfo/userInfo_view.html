@@ -1,0 +1,36 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="id" value="${item.id}">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="id" name="ID" value="${item.id}" underline="true"/>
+                    <#input id="account" name="登录账号" value="${item.account}" underline="true"/>
+                    <#input id="phone" name="手机号" value="${item.phone}" underline="true"/>
+                    <#input id="nickName" name="用户昵称" value="${item.nickName}" underline="true"/>
+                    <#input id="avatar" name="头像" value="${item.avatar}" underline="true"/>
+                    <#input id="realName" name="真实姓名" value="${item.realName}" underline="true"/>
+                    <#input id="idCard" name="身份证号" value="${item.idCard}" />
+                    <#input id="email" name="邮箱" value="${item.email}" underline="true"/>
+                </div>
+
+                <div class="col-sm-6">
+                    <#input id="creditScore" name="信用分" value="${item.creditScore}" underline="true"/>
+                    <#input id="orderBy" name="优先度" value="${item.orderBy}" underline="true"/>
+                    <#input id="status" name="状态" value="${item.status}" underline="true"/>
+                    <#input id="roleType" name="角色类型" value="${item.roleType}" underline="true"/>
+                    <#input id="roleName" name="角色名称" value="${item.roleName}" underline="true"/>
+                    <#input id="roleParentId" name="所属代理" value="${item.roleParentId}" underline="true"/>
+                    <#input id="profitRate" name="分利比例" value="${item.profitRate}" underline="true"/>
+                    <#input id="createTime" name="创建时间" value="${item.createTime}" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/userInfo/userInfo_info.js"></script>
+@}

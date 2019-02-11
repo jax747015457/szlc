@@ -1,0 +1,35 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="id" value="${item.id}">
+
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <div style="width: 100%">
+                            <img style="height:250px;" src="${ctxPath}${item.qrCodeAli == null ? '/static/img/NoPIC.png' : '/kaptcha/'+item.qrCodeAli}">
+                        </div>
+                        <label class="control-label">支付宝收款码</label>
+                    </div>
+                    <div class="col-sm-4">
+                        <div style="width: 100%">
+                            <img style="height:250px;" src="${ctxPath}${item.qrCodeWx == null ? '/static/img/NoPIC.png' : '/kaptcha/'+item.qrCodeWx}">
+                        </div>
+                        <label class="control-label">微信收款码</label>
+                    </div>
+                    <div class="col-sm-4">
+                        <div style="width: 100%">
+                            <img style="height:250px;" src="${ctxPath}${item.qrCodeWxMonitor == null ? '/static/img/NoPIC.png' : '/kaptcha/'+item.qrCodeWxMonitor}">
+                        </div>
+                        <label class="control-label">收款小账本二维码</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/userInfo/userInfo_info.js"></script>
+@}

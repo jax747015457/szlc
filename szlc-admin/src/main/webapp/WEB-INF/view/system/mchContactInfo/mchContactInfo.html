@@ -1,0 +1,35 @@
+@layout("/common/_container.html"){
+    <div class="wrapper wrapper-content animated fadeInRight">
+    	<div class="ibox float-e-margins">
+	    	<div class="ibox-title">
+                <h5>商户信息管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <#NameCon id="sTureName" name="名称或编号" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#NameCon id="sPhone" name="电话号码" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="MchContactInfo.search()"/>
+                            </div>
+                        </div>
+                        <div class="hidden-xs" id="MchContactInfoTableToolbar" role="group">
+                        </div>
+                        <#table id="MchContactInfoTable"/>
+                    </div>
+                </div>
+            </div>
+      	</div>
+     </div>
+ </div>    
+ <!-- 自定义js -->
+ <script src="${ctxPath}/static/js/hplus.js?v=4.1.0"></script>
+ <script type="text/javascript" src="${ctxPath}/static/js/contabs.js"></script>
+ <!-- 第三方插件 -->
+ <script src="${ctxPath}/static/js/plugins/pace/pace.min.js"></script>
+@}

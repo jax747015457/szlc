@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.system.dao.OrderInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.stylefeng.guns.modular.system.model.OrderInfo">
+        <id column="id" property="id" />
+        <result column="orderNo" property="orderNo" />
+        <result column="productId" property="productId" />
+        <result column="userId" property="userId" />
+        <result column="money" property="money" />
+        <result column="annualRate" property="annualRate" />
+        <result column="incomeAmount" property="incomeAmount" />
+        <result column="createTime" property="createTime" />
+        <result column="incomeTime" property="incomeTime" />
+        <result column="status" property="status" />
+        <result column="payTradeNo" property="payTradeNo" />
+        <result column="payTime" property="payTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, orderNo, productId, userId, money, annualRate, incomeAmount, createTime, incomeTime, status, payTradeNo, payTime
+    </sql>
+
+    <!--查询产品的累计金额/用户数量-->
+    <select id="getProductInfoInAddsMoneyAndUserNum" resultType="java.util.Map">
+        SELECT productId, COUNT(userId) AS userNum, SUM(money) AS addsMoney FROM app_order_info o WHERE `status` NOT IN(#{status}) AND productId = #{productId} GROUP BY productId
+    </select>
+
+    <!--查询订单信息-->
+    <select id="getVoList" resultType="com.stylefeng.guns.modular.system.model.vo.OrderInfoVo">
+        SELECT o.*, pi.productName, pi.productNo, ui.nickName, ui.realName, ui.phone FROM app_order_info o
+        LEFT JOIN app_product_info pi ON o.productId = pi.id
+        LEFT JOIN app_user_info ui ON o.userId = ui.id
+        <where>
+            <if test="orderNo != null and orderNo != ''">AND o.orderNo LIKE CONCAT('%',#{orderNo,jdbcType=VARCHAR},'%')</if>
+            <if test="productName != null and productName != ''">AND pi.productName LIKE CONCAT('%',#{productName,jdbcType=VARCHAR},'%')</if>
+            <if test="productNo != null and productNo != ''">AND pi.productNo LIKE CONCAT('%',#{productNo,jdbcType=VARCHAR},'%')</if>
+            <if test="phone != null and phone != ''">AND ui.phone LIKE CONCAT('%',#{phone,jdbcType=VARCHAR},'%')</if>
+            <if test="nickName != null and nickName != ''">AND ui.nickName LIKE CONCAT('%',#{nickName,jdbcType=VARCHAR},'%')</if>
+            <if test="status != null">AND o.`status` = #{status,jdbcType=INTEGER}</if>
+            <if test="beginTime != null and beginTime != '' and endTime != null">AND o.createTime BETWEEN #{beginTime,jdbcType=VARCHAR} AND #{endTime,jdbcType=VARCHAR}</if>
+        </where>
+        ORDER BY o.id DESC
+    </select>
+
+    <!--过去7天订单量-->
+    <select id="past_7_day" resultType="java.util.Map">
+        SELECT v.addTime AS time, IFNULL(oi.num,0) AS num FROM past_7_day_view v
+        LEFT JOIN (SELECT DATE_FORMAT(o.createTime,'%Y-%m-%d') AS createTime, COUNT(*) AS num FROM app_order_info o GROUP BY DATE_FORMAT(o.createTime,'%Y-%m-%d')) oi ON v.addTime = oi.createTime
+    </select>
+
+    <!--本周订单量-->
+    <select id="now_week" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM app_order_info WHERE YEARWEEK(DATE_FORMAT(createTime,'%Y-%m-%d')) = YEARWEEK(now());
+    </select>
+
+    <!--上周订单量-->
+    <select id="past_1_week" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM app_order_info WHERE YEARWEEK(DATE_FORMAT(createTime,'%Y-%m-%d')) = YEARWEEK(now())-1;
+    </select>
+
+    <!--本月/上月订单量-->
+    <select id="past_2_month" resultType="java.util.Map">
+        SELECT v.addTime AS time, IFNULL(oi.num,0) AS num FROM past_2_month_view v
+        LEFT JOIN (SELECT DATE_FORMAT(o.createTime,'%Y-%m') AS createTime, COUNT(*) AS num FROM app_order_info o GROUP BY DATE_FORMAT(o.createTime,'%Y-%m')) oi ON v.addTime = oi.createTime
+    </select>
+
+    <!--今年/去年订单量-->
+    <select id="past_2_year" resultType="java.util.Map">
+        SELECT v.addTime AS time, IFNULL(oi.num,0) AS num FROM past_2_year_view v
+        LEFT JOIN (SELECT DATE_FORMAT(o.createTime,'%Y') AS createTime, COUNT(*) AS num FROM app_order_info o GROUP BY DATE_FORMAT(o.createTime,'%Y')) oi ON v.addTime = oi.createTime
+    </select>
+
+</mapper>

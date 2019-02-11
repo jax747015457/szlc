@@ -1,0 +1,171 @@
+@layout("/common/_container.html"){
+<div class="row">
+	<div class="col-sm-4">
+		<div class="ibox float-e-margins">
+			<div class="ibox-title">
+				<h3>平台总用户</h3>
+			</div>
+			<div class="ibox-content">
+				<h1 class="no-margins text-navy">${userTotalNum}</h1>
+				<div class="stat-percent font-bold">人</i>
+				</div>
+				<h4>总数</h4>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-4">
+		<div class="ibox float-e-margins">
+			<div class="ibox-title">
+				<h3>本月新增用户</h3>
+			</div>
+			<div class="ibox-content">
+				<h1 class="no-margins text-warning">${userAddNum}</h1>
+				<div class="stat-percent font-bold">人</i>
+				</div>
+				<h4>总数</h4>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-4">
+		<div class="ibox float-e-margins">
+			<div class="ibox-title">
+				<h3>平台总订单</h3>
+			</div>
+			<div class="ibox-content">
+				<h1 class="no-margins text-success">${orderTootalNum}</h1>
+				<div class="stat-percent font-bold">单</i>
+				</div>
+				<h4>总量</h4>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-3">
+		<div class="ibox float-e-margins">
+			<div class="ibox-title">
+				<h5>今日总单量</h5>
+			</div>
+			<div class="ibox-content">
+				<h1 class="no-margins text-navy">${todayNum}</h1>
+				<small>${todayAddRate}</small>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-3">
+		<div class="ibox float-e-margins">
+			<div class="ibox-title">
+				<h5>本周订单量</h5>
+			</div>
+			<div class="ibox-content">
+				<h1 class="no-margins text-navy">${weekNum}</h1>
+				<small>${weekAddRate}</small>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-3">
+		<div class="ibox float-e-margins">
+			<div class="ibox-title">
+				<h5>本月订单量</h5>
+			</div>
+			<div class="ibox-content">
+				<h1 class="no-margins text-navy">${monthNum}</h1>
+				<small>${monthAddRate}</small>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-3">
+		<div class="ibox float-e-margins">
+			<div class="ibox-title">
+				<h5>本年订单量</h5>
+			</div>
+			<div class="ibox-content">
+				<h1 class="no-margins text-navy">${yearNum}</h1>
+				<small>${yearAddRate}</small>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-6">
+		<div class="ibox float-e-margins">
+			<div class="ibox-title">
+				<h5>日用户注册走势</h5>
+			</div>
+			<div class="ibox-content">
+				<canvas id="lineChart" height="100"></canvas>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-6">
+		<div class="ibox float-e-margins">
+			<div class="ibox-title">
+				<h5>日订单量走势</h5>
+			</div>
+			<div class="ibox-content">
+				<canvas id="lineChart2" height="100"></canvas>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- ChartJS-->
+<script src="${ctxPath}/static/js/plugins/chartJs/Chart.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var lineData = {
+            labels: ${timeList},
+            datasets: [
+                {
+                    fillColor: "rgba(26,179,148,0.5)",
+                    strokeColor: "rgba(26,179,148,0.7)",
+                    pointColor: "rgba(26,179,148,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(26,179,148,1)",
+                    data: ${numList}
+                }
+            ]
+        };
+
+        var lineData2 = {
+            labels: ${timeList2},
+            datasets: [
+                {
+                    fillColor: "rgba(26,179,148,0.5)",
+                    strokeColor: "rgba(26,179,148,0.7)",
+                    pointColor: "rgba(26,179,148,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(26,179,148,1)",
+                    data: ${numList2}
+                }
+            ]
+        };
+
+        var lineOptions = {
+            scaleShowGridLines: true,
+            scaleGridLineColor: "rgba(0,0,0,.05)",
+            scaleGridLineWidth: 1,
+            bezierCurve: true,
+            bezierCurveTension: 0.4,
+            pointDot: true,
+            pointDotRadius: 4,
+            pointDotStrokeWidth: 1,
+            pointHitDetectionRadius: 20,
+            datasetStroke: true,
+            datasetStrokeWidth: 2,
+            datasetFill: true,
+            responsive: true,
+        };
+
+        var ctx = document.getElementById("lineChart").getContext("2d");
+        var Chart1 = new Chart(ctx).Line(lineData, lineOptions);
+
+        var ctx2 = document.getElementById("lineChart2").getContext("2d");
+        var Chart2 = new Chart(ctx2).Line(lineData2, lineOptions);
+    });
+</script>
+@}

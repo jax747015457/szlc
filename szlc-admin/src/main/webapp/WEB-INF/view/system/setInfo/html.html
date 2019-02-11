@@ -1,0 +1,129 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="tabs-container">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">关于我们</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false">用户协议</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-3" aria-expanded="false">收益规则</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-4" aria-expanded="false">取出规则</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-5" aria-expanded="false">购买相关协议</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div id="tab-1" class="tab-pane active">
+                                    <div class="panel-body">
+                                        预览访问地址：<a href="${url_1}" target="_blank">${url_1}</a><br/><br/>
+                                        <textarea id="editor_1" type="text/plain" style="width:1200px;height:400px;">${content_1}</textarea>
+                                        <div class="row btn-group-m-t">
+                                            <div class="col-sm-10 col-sm-offset-5">
+                                                <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="update_1();"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="tab-2" class="tab-pane">
+                                    <div class="panel-body">
+                                        预览访问地址：<a href="${url_2}" target="_blank">${url_2}</a><br/><br/>
+                                        <textarea type="text/plain" id="editor_2" style="width:1200px;height:400px;">${content_2}</textarea>
+                                        <div class="row btn-group-m-t">
+                                            <div class="col-sm-10 col-sm-offset-5">
+                                                <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="update_2();"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="tab-3" class="tab-pane">
+                                    <div class="panel-body">
+                                        预览访问地址：<a href="${url_3}" target="_blank">${url_3}</a><br/><br/>
+                                        <textarea id="editor_3" type="text/plain" style="width:1200px;height:400px;">${content_3}</textarea>
+                                        <div class="row btn-group-m-t">
+                                            <div class="col-sm-10 col-sm-offset-5">
+                                                <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="update_3();"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="tab-4" class="tab-pane">
+                                    <div class="panel-body">
+                                        预览访问地址：<a href="${url_4}" target="_blank">${url_4}</a><br/><br/>
+                                        <textarea id="editor_4" type="text/plain" style="width:1200px;height:400px;">${content_4}</textarea>
+                                        <div class="row btn-group-m-t">
+                                            <div class="col-sm-10 col-sm-offset-5">
+                                                <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="update_4();"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="tab-5" class="tab-pane">
+                                    <div class="panel-body">
+                                        预览访问地址：<a href="${url_5}" target="_blank">${url_5}</a><br/><br/>
+                                        <textarea id="editor_5" type="text/plain" style="width:1200px;height:400px;">${content_5}</textarea>
+                                        <div class="row btn-group-m-t">
+                                            <div class="col-sm-10 col-sm-offset-5">
+                                                <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="update_5();"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link type="text/css" rel="stylesheet" href="${ctxPath}/static/js/plugins/umeditor/themes/default/css/umeditor.css">
+<script type="text/javascript" charset="utf-8" src="${ctxPath}/static/js/plugins/umeditor/umeditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="${ctxPath}/static/js/plugins/umeditor/umeditor.js"></script>
+<script type="text/javascript" charset="utf-8" src="${ctxPath}/static/js/plugins/umeditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript">
+    var editor_1 = null;
+    var editor_2 = null;
+    var editor_3 = null;
+    var editor_4 = null;
+    var editor_5 = null;
+
+    $(function () {
+        //初始化编辑器
+        editor_1 = UM.getEditor('editor_1');
+        editor_2 = UM.getEditor('editor_2');
+        editor_3 = UM.getEditor('editor_3');
+        editor_4 = UM.getEditor('editor_4');
+        editor_5 = UM.getEditor('editor_5');
+    });
+
+    function update_1(){
+        submitData(1, editor_1.getContent());
+    }
+    function update_2(){
+        submitData(2, editor_2.getContent());
+    }
+    function update_3(){
+        submitData(3, editor_3.getContent());
+    }
+    function update_4(){
+        submitData(4, editor_4.getContent());
+    }
+    function update_5(){
+        submitData(5, editor_5.getContent());
+    }
+    function submitData(type, content) {
+        //提交信息
+        var ajax = new $ax(Feng.ctxPath + "/setInfo/updateHtml", function(data){
+            Feng.success("编辑成功!");
+            window.parent.BannerInfo.table.refresh();
+        },function(data){
+            Feng.error("编辑失败!" + data.responseJSON.message + "!");
+        });
+        ajax.set("type", type);
+        ajax.set("content", content);
+        ajax.start();
+    }
+</script>
+@}
